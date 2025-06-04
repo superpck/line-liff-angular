@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import liff from '@line/liff';
 import config from '../configs/config.json';
-// declare var liff: any;
 
 @Injectable({
   providedIn: 'root'
