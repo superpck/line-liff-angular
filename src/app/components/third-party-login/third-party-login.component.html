@@ -1,0 +1,74 @@
+<div class="main-container">
+  <!-- Loading Screen -->
+  <div *ngIf="loading" class="loading-screen">
+    <div class="spinner-container">
+      <img src="./assets/images/spinner-cycle.gif" alt="Loading" class="spinner">
+    </div>
+  </div>
+
+  <!-- Profile Content -->
+  <div *ngIf="!loading" class="profile-page">
+    <div class="profile-card">
+      <!-- Header -->
+      <div class="card-header">
+        <h1 class="card-title">{{ userProfile.displayName }}</h1>
+      </div>
+
+      <!-- Profile Body -->
+      <div *ngIf="userProfile; else loading" class="card-body">
+        <div class="profile-section">
+          <!-- Avatar and Name -->
+          <div class="avatar-container">
+            <img *ngIf="userProfile.pictureUrl" [src]="userProfile.pictureUrl" alt="Profile Picture" class="avatar">
+            <img *ngIf="!userProfile.pictureUrl" src="./assets/images/user_unknow.png" alt="Default Profile"
+              class="avatar">
+          </div>
+
+          <!-- Authentication Options -->
+          <div class="authentication-section">
+            <h2 class="section-title">เลือกวิธียืนยันเข้าใช้งาน</h2>
+
+            <div class="auth-options">
+              <div class="auth-option" (click)="loginByProviderID()">
+                <img src="./assets/images/providerid.png" alt="Provider ID" class="auth-icon">
+                <span class="auth-label">Provider ID</span>
+              </div>
+
+              <div class="auth-option" (click)="loginByThaID()">
+                <img src="./assets/images/thaid.png" alt="Thai ID" class="auth-icon">
+                <span class="auth-label">Thai ID</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading Template -->
+      <ng-template #loading>
+        <div class="loading-container">
+          <div class="loading-animation">
+            <div class="loading-circle"></div>
+            <div class="loading-line"></div>
+            <div class="loading-line short"></div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="footer">
+    {{appConfig.appName}} {{appConfig.version}}-{{appConfig.subVersion}}
+  </div>
+</div>
+
+<!-- Status Messages -->
+<div *ngIf="false && statusText && statusText.length > 0" class="status-container">
+  <div style="margin-bottom: 1.2rem;">Step:</div>
+  <ol>
+    <li *ngFor="let text of statusText" class="status-item">{{text}}</li>
+  </ol>
+
+  <pre *ngIf="userProfile">
+    {{ userProfile | json }}
+  </pre>
+</div>
