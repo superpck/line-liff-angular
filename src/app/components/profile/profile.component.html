@@ -11,33 +11,30 @@
     <div class="profile-card">
       <!-- Header -->
       <div class="card-header">
-        <h1 class="card-title">{{ userProfile.displayName }}</h1>
+        <h1 class="card-title">Line Profile</h1>
       </div>
 
       <!-- Profile Body -->
       <div *ngIf="userProfile; else loading" class="card-body">
+        <!-- Avatar and Basic Info -->
         <div class="profile-section">
-          <!-- Avatar and Name -->
           <div class="avatar-container">
             <img *ngIf="userProfile.pictureUrl" [src]="userProfile.pictureUrl" alt="Profile Picture" class="avatar">
             <img *ngIf="!userProfile.pictureUrl" src="./assets/images/user_unknow.png" alt="Default Profile"
               class="avatar">
+            <div class="user-name">{{ userProfile.displayName }}</div>
           </div>
 
-          <!-- Authentication Options -->
-          <div class="authentication-section">
-            <h2 class="section-title">เลือกวิธียืนยันเข้าใช้งาน</h2>
+          <!-- User Details -->
+          <div class="user-details">
+            <div class="info-item">
+              <span class="info-label">User ID</span>
+              <span class="info-value user-id">{{ userProfile.userId }}</span>
+            </div>
 
-            <div class="auth-options">
-              <div class="auth-option" (click)="loginByProviderID()">
-                <img src="./assets/images/providerid.png" alt="Provider ID" class="auth-icon">
-                <span class="auth-label">Provider ID</span>
-              </div>
-
-              <div class="auth-option" (click)="loginByThaID()">
-                <img src="./assets/images/thaid.png" alt="Thai ID" class="auth-icon">
-                <span class="auth-label">Thai ID</span>
-              </div>
+            <div *ngIf="userProfile.token?.email" class="info-item">
+              <span class="info-label">email</span>
+              <span class="info-value">{{ userProfile.token?.email }}</span>
             </div>
           </div>
         </div>
@@ -56,19 +53,22 @@
     </div>
   </div>
 
-  <div class="footer">
+  <!-- Status Messages (Debug) -->
+  <div *ngIf="statusText && statusText.length > 0" class="status-container">
+    <div class="status-header">Debug Information</div>
+    <ol class="status-list">
+      <li *ngFor="let text of statusText" class="status-item">{{text}}</li>
+    </ol>
+
+    <div *ngIf="userProfile" class="json-preview">
+      <div class="json-title">Profile Data:</div>
+      <pre class="json-content">{{ userProfile | json }}</pre>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div *ngIf="!loading" class="footer">
     {{appConfig.appName}} {{appConfig.version}}-{{appConfig.subVersion}}
   </div>
-</div>
 
-<!-- Status Messages -->
-<div *ngIf="false && statusText && statusText.length > 0" class="status-container">
-  <div style="margin-bottom: 1.2rem;">Step:</div>
-  <ol>
-    <li *ngFor="let text of statusText" class="status-item">{{text}}</li>
-  </ol>
-
-  <pre *ngIf="userProfile">
-    {{ userProfile | json }}
-  </pre>
 </div>
