@@ -22,7 +22,6 @@ export class ProfileComponent implements OnInit {
 
   async ngOnInit() {
     this.statusText.push('host: '+window.location.href);
-    this.statusText.push('search: '+window.location.hash);
     this.statusText.push('โหลดข้อมูลผู้ใช้...');
     this.userProfile = await this.lineService.getProfile();
     this.statusText.push('Line name: '+(this.userProfile.displayName || ''));
