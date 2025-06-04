@@ -7,7 +7,6 @@
 /bazel-out
 config.json
 *.sh
-upload.sh
 
 # Node
 /node_modules
